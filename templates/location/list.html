@@ -1,0 +1,20 @@
+{% extends "base/theme.html" %}
+{% block main_content %}
+<div class="row main-content">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	{% for location in object_list%}
+		<div class="">
+		<h3><a href="{{ location.get_absolute_url }}">{{location.title}}</a></h3>
+		{% if location.address %}<p><b>Location: </b>{{ location.address }}</p>{% endif %}
+		{% if location.hour %}<p>{{ location.hour }}</p>{% endif %}
+		{% if location.image_file %}
+			<img src="{{ location.image_file.url }}"/>
+		{% endif %}
+		<p>{{ location.description }}</p>
+		</div>
+	{% endfor %}
+	</div>
+	<div class="col-md-2"></div>
+</div>
+{% endblock %}
