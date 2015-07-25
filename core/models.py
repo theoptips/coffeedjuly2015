@@ -1,8 +1,18 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 import os
 import uuid
+
+RATING_CHOICES = (
+    (0,'None'),
+    (1,'*'),
+    (2,'**'),
+    (3,'***'),
+    (4,'****'),
+    (5,'*****'),
+)
 
 def upload_to_location(instance, filename):
     blocks = filename.split('.')
@@ -25,3 +35,10 @@ class Location(models.Model):
 
     def get_absolute_url(self):
     	return reverse(viewname="location_list",args=[self.id])
+
+class Review(models.Model):
+    location = models.ForeignKey(Location)
+    user = models.ForeignKey(User)
+    description = models.TextField(null=True, blank=True)
+    rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
